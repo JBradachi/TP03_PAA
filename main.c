@@ -11,8 +11,15 @@ int main(){
     strcat(path, nomeArquivoEntrada);
     strcat(path, ".txt");
 
-    printf("Digite a cifra\n>>> ");
+    printf("Como deseja gerar a cifra?\n[ 1 ] Digitar\n[ 2 ] Geraração aleatória\n>>> ");
     scanf("%d", &cifra);
+    if(cifra == 1){
+        printf("Digite a cifra \n>>> ");
+        scanf("%d", &cifra);    
+    }else{
+        srand((unsigned)time(NULL));
+        cifra = 1+rand()%25;
+    }
 
     manipulaArquivo(path, cifra);
 }
