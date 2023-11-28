@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "*.c": "c",
+        "criptografia.h": "c"
+    }
+}

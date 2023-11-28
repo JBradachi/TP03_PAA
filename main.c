@@ -2,7 +2,7 @@
 
 int main(){
     FILE* arqEntrada, arqSaida;
-    int cifra;
+    int cifra, random;
     char nomeArquivoEntrada[40];
     char path[100] = "./entradas/";
 
@@ -11,9 +11,9 @@ int main(){
     strcat(path, nomeArquivoEntrada);
     strcat(path, ".txt");
 
-    printf("Como deseja gerar a cifra?\n[ 1 ] Digitar\n[ 2 ] Geraração aleatória\n>>> ");
-    scanf("%d", &cifra);
-    if(cifra == 1){
+    printf("Como deseja gerar a cifra?\n[ 0 ] Digitar\n[ 1 ] Geraração aleatória\n>>> ");
+    scanf("%d", &random);
+    if(random){
         printf("Digite a cifra \n>>> ");
         scanf("%d", &cifra);    
     }else{
@@ -21,5 +21,6 @@ int main(){
         cifra = 1+rand()%25;
     }
 
-    manipulaArquivo(path, cifra);
+
+    manipulaArquivo(path, cifra, random, 1);
 }
