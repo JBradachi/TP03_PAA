@@ -10,7 +10,7 @@ int encriptografa(FILE *arqEntrada, FILE *arqSaida, int cifra){
             fprintf(arqSaida, "%c", (c+cifra));
         }
         else{
-            fprintf(arqSaida, "%c", (c+cifra-93));
+            fprintf(arqSaida, "%c", (c+cifra-95));
         }
     }
     
