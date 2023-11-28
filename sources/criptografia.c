@@ -4,6 +4,7 @@ int encriptografa(FILE *arqEntrada, FILE *arqSaida, int cifra, int ehRandom, Tad
     char c;
     int count = 0;
     printf("Arquivo encriptado: \n");
+    printf("cifra usada = %d ", cifra);
     while ((c = getc(arqEntrada)) != EOF){
         if(c == '\n'){
             fprintf(arqSaida, "%c", c);
@@ -13,6 +14,9 @@ int encriptografa(FILE *arqEntrada, FILE *arqSaida, int cifra, int ehRandom, Tad
             fprintf(arqSaida, "%c", (c+cifra));
             printf("%c", (c+cifra));
             if(ehRandom){
+                if(isalpha(c)!= 0){
+                    lista->listaDeOcorrencias[(tolower(c)+cifra)].ocorrencia+=1;
+                }
                 lista->listaDeOcorrencias[c+cifra-32].ocorrencia+=1;
                 count++;
             }
@@ -22,7 +26,7 @@ int encriptografa(FILE *arqEntrada, FILE *arqSaida, int cifra, int ehRandom, Tad
             fprintf(arqSaida, "%c", (c+cifra-95));
             printf("%c", (c+cifra-95));
             if(ehRandom){
-                lista->listaDeOcorrencias[c+cifra-127].ocorrencia+=1;
+                lista->listaDeOcorrencias[(tolower(c)+cifra-127)].ocorrencia+=1;
                 count++;
             }
         }
