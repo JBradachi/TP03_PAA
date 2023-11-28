@@ -1,5 +1,5 @@
 all: 
-	gcc ./sources/criptografia.c ./headers/criptografia.h ./main.c -o exec
+	gcc ./sources/criptografia.c ./headers/criptografia.h ./headers/analise.h ./sources/analise.c ./main.c -o exec
 	./exec
 
 clean:

@@ -14,11 +14,11 @@ int main(){
     printf("Como deseja gerar a cifra?\n[ 0 ] Digitar\n[ 1 ] Geraração aleatória\n>>> ");
     scanf("%d", &random);
     if(random){
-        printf("Digite a cifra \n>>> ");
-        scanf("%d", &cifra);    
-    }else{
         srand((unsigned)time(NULL));
         cifra = 1+rand()%25;
+    }else{
+        printf("Digite a cifra \n>>> ");
+        scanf("%d", &cifra); 
     }
 
 

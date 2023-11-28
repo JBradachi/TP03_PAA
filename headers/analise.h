@@ -5,11 +5,13 @@
 
 typedef struct celulaAnalise{
     char caractere;
-    int ocorrencia;
+    float ocorrencia;
 }TadCelulaAnalise;
 
 typedef struct analise{
-    celulaAnalise listaDeOcorrencias[94];
+    TadCelulaAnalise listaDeOcorrencias[94];
 }TadAnalise;
 
-int iniciaLista(TadAnalise lista);
+int iniciaLista(TadAnalise *lista);
+int calculaPercentual(TadAnalise *lista, int totalDeChar);
+void imprimePercentual(TadAnalise lista);

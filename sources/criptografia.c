@@ -1,6 +1,6 @@
 #include "../headers/criptografia.h"
 
-int encriptografa(FILE *arqEntrada, FILE *arqSaida, int cifra, int ehRandom){
+int encriptografa(FILE *arqEntrada, FILE *arqSaida, int cifra, int ehRandom, TadAnalise *lista){
     char c;
     int count = 0;
     printf("Arquivo encriptado: \n");
@@ -13,6 +13,7 @@ int encriptografa(FILE *arqEntrada, FILE *arqSaida, int cifra, int ehRandom){
             fprintf(arqSaida, "%c", (c+cifra));
             printf("%c", (c+cifra));
             if(ehRandom){
+                lista->listaDeOcorrencias[c+cifra-32].ocorrencia+=1;
                 count++;
             }
             
@@ -21,12 +22,13 @@ int encriptografa(FILE *arqEntrada, FILE *arqSaida, int cifra, int ehRandom){
             fprintf(arqSaida, "%c", (c+cifra-95));
             printf("%c", (c+cifra-95));
             if(ehRandom){
+                lista->listaDeOcorrencias[c+cifra-127].ocorrencia+=1;
                 count++;
             }
         }
     }
     printf("\n");
-    
+    return count;
 }
 
 int desencriptografia(FILE *arqEncripto, FILE *arqDesencripto, int cifra){
@@ -49,10 +51,15 @@ int desencriptografia(FILE *arqEncripto, FILE *arqDesencripto, int cifra){
 
 int manipulaArquivo(char *nomeEntrada, int cifra, int ehRandom, int Encripto){
     FILE *arqEntrada, *arqSaida;
+    TadAnalise lista;
+    int totalDeChar;
+    iniciaLista(&lista);
     if((arqEntrada = fopen(nomeEntrada, "r")) != NULL){
         if((arqSaida = fopen("./entradas/arquivoEncriptografado.txt", "w")) != NULL){
             if(Encripto){
-                encriptografa(arqEntrada, arqSaida, cifra, ehRandom);
+                totalDeChar = encriptografa(arqEntrada, arqSaida, cifra, ehRandom, &lista);
+                calculaPercentual(&lista, totalDeChar);
+                imprimePercentual(lista);
             }else{
                 desencriptografia(arqEntrada, arqSaida, cifra);
             }
