@@ -5,6 +5,8 @@ int encriptografa(FILE *arqEntrada, FILE *arqSaida, int cifra, int ehRandom, Tad
     int count = 0;
     printf("Arquivo encriptado: \n");
     printf("cifra usada = %d ", cifra);
+
+    // para o calculo da análise os caracteres alfabéticos foram unidospara se utilizar a tabela que o professor passou
     while ((c = getc(arqEntrada)) != EOF){
         if(c == '\n'){
             fprintf(arqSaida, "%c", c);
@@ -15,9 +17,15 @@ int encriptografa(FILE *arqEntrada, FILE *arqSaida, int cifra, int ehRandom, Tad
             printf("%c", (c+cifra));
             if(ehRandom){
                 if(isalpha(c)!= 0){
-                    lista->listaDeOcorrencias[(tolower(c)+cifra)].ocorrencia+=1;
+                    if(tolower(c) + cifra <= 122){
+                        lista->listaDeOcorrencias[(tolower(c)+cifra-32)].ocorrencia+=1;
+                    }else{
+                        lista->listaDeOcorrencias[(tolower(c)+cifra-26-32)].ocorrencia+=1;
+                    }
+                }else{
+                    lista->listaDeOcorrencias[c+cifra-32].ocorrencia+=1;
                 }
-                lista->listaDeOcorrencias[c+cifra-32].ocorrencia+=1;
+                
                 count++;
             }
             
@@ -26,7 +34,16 @@ int encriptografa(FILE *arqEntrada, FILE *arqSaida, int cifra, int ehRandom, Tad
             fprintf(arqSaida, "%c", (c+cifra-95));
             printf("%c", (c+cifra-95));
             if(ehRandom){
-                lista->listaDeOcorrencias[(tolower(c)+cifra-127)].ocorrencia+=1;
+                if(isalpha(c)!= 0){
+                    if(tolower(c) + cifra <= 122){
+                        lista->listaDeOcorrencias[(tolower(c)+cifra-32)].ocorrencia+=1;
+                    }else{
+                        lista->listaDeOcorrencias[(tolower(c)+cifra-26-32)].ocorrencia+=1;
+                    }
+                }else{
+                    lista->listaDeOcorrencias[(c+cifra-95-32)].ocorrencia+=1;
+                }
+                
                 count++;
             }
         }
