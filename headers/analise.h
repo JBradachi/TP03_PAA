@@ -10,7 +10,7 @@ typedef struct celulaAnalise{
 }TadCelulaAnalise;
 
 typedef struct analise{
-    TadCelulaAnalise listaDeOcorrencias[94];
+    TadCelulaAnalise listaDeOcorrencias[26];
 }TadAnalise;
 
 int iniciaLista(TadAnalise *lista);

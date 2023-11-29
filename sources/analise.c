@@ -2,30 +2,30 @@
 
 int iniciaLista(TadAnalise *lista){
     int i;
-    for(i = 0; i<94; i++){
-        lista->listaDeOcorrencias[i].caractere = i+32;
+    for(i = 0; i<26; i++){
+        lista->listaDeOcorrencias[i].caractere = i+97;
         lista->listaDeOcorrencias[i].ocorrencia = 0;
     }
 }
 
 int calculaPercentual(TadAnalise *lista, int totalDeChar){
     int i;
-    for(i = 0; i<94; i++){
+    for(i = 0; i<26; i++){
         lista->listaDeOcorrencias[i].ocorrencia = ((lista->listaDeOcorrencias[i].ocorrencia)/(totalDeChar))*100;
     }
 }
 
 void imprimePercentual(TadAnalise lista){
     int i;
-    quicksort(&lista, 0, 94);
-    for(i = 0; i<94; i++){
+    quicksort(&lista, 0, 26);
+    for(i = 0; i<26; i++){
         printf("%c | %0.2f\n", lista.listaDeOcorrencias[i].caractere, lista.listaDeOcorrencias[i].ocorrencia);
     }
 }
 
 void quicksort(TadAnalise *lista,float first,float last){
     int pivot, j, i;
-    float temp;
+    TadCelulaAnalise temp;
 
     if(first<last){
         pivot=first;
@@ -39,16 +39,20 @@ void quicksort(TadAnalise *lista,float first,float last){
             while(lista->listaDeOcorrencias[j].ocorrencia < lista->listaDeOcorrencias[pivot].ocorrencia)
                 j--;
             if(i<j){
-                temp=lista->listaDeOcorrencias[i].ocorrencia;
-                lista->listaDeOcorrencias[i].ocorrencia = lista->listaDeOcorrencias[j].ocorrencia;
-                lista->listaDeOcorrencias[j].ocorrencia =temp;
+                temp=lista->listaDeOcorrencias[i];
+                lista->listaDeOcorrencias[i] = lista->listaDeOcorrencias[j];
+                lista->listaDeOcorrencias[j] = temp;
             }
         }
 
-        temp=lista->listaDeOcorrencias[pivot].ocorrencia;
-        lista->listaDeOcorrencias[pivot].ocorrencia = lista->listaDeOcorrencias[j].ocorrencia;
-        lista->listaDeOcorrencias[j].ocorrencia = temp;
+        temp=lista->listaDeOcorrencias[pivot];
+        lista->listaDeOcorrencias[pivot] = lista->listaDeOcorrencias[j];
+        lista->listaDeOcorrencias[j] = temp;
         quicksort(lista,first,j-1);
         quicksort(lista,j+1,last);
         }
+}
+
+int cifraChute(TadAnalise *lista){
+    
 }
