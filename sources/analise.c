@@ -34,9 +34,9 @@ void quicksort(TadAnalise *lista,float first,float last){
 
 
         while(i<j){
-            while(lista->listaDeOcorrencias[i].ocorrencia<=lista->listaDeOcorrencias[pivot].ocorrencia&&i<last)
+            while(lista->listaDeOcorrencias[i].ocorrencia>=lista->listaDeOcorrencias[pivot].ocorrencia&&i<last)
                 i++;
-            while(lista->listaDeOcorrencias[j].ocorrencia > lista->listaDeOcorrencias[pivot].ocorrencia)
+            while(lista->listaDeOcorrencias[j].ocorrencia < lista->listaDeOcorrencias[pivot].ocorrencia)
                 j--;
             if(i<j){
                 temp=lista->listaDeOcorrencias[i].ocorrencia;
