@@ -31,8 +31,8 @@ int encriptografa(FILE *arqEntrada, FILE *arqSaida, int cifra, int ehRandom, Tad
             
         }
         else{
-            fprintf(arqSaida, "%c", (c+cifra-95));
-            printf("%c", (c+cifra-95));
+            fprintf(arqSaida, "%c", (c+cifra-94));
+            printf("%c", (c+cifra-94));
             if(ehRandom){
                 if(isalpha(c)!= 0){
                     if(tolower(c) + cifra <= 122){
@@ -41,7 +41,7 @@ int encriptografa(FILE *arqEntrada, FILE *arqSaida, int cifra, int ehRandom, Tad
                         lista->listaDeOcorrencias[(tolower(c)+cifra-26-32)].ocorrencia+=1;
                     }
                 }else{
-                    lista->listaDeOcorrencias[(c+cifra-95-32)].ocorrencia+=1;
+                    lista->listaDeOcorrencias[(c+cifra-94-32)].ocorrencia+=1;
                 }
                 
                 count++;
