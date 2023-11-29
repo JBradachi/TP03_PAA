@@ -60,8 +60,8 @@ int desencriptografia(FILE *arqEncripto, FILE *arqDesencripto, int cifra){
             printf("%c", (c-cifra));
         }
         else{
-            fprintf(arqDesencripto, "%c", (c-cifra+95));
-            printf("%c", (c-cifra+95));
+            fprintf(arqDesencripto, "%c", (c-cifra+94));
+            printf("%c", (c-cifra+94));
         }
     }
 }
