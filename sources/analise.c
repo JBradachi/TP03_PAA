@@ -15,7 +15,7 @@ int calculaPercentual(TadAnalise *lista, int totalDeChar){
     }
 }
 
-void imprimePercentual(TadAnalise lista){
+void imprimePercentual(TadAnalise lista, int cifra_usada){
     int i;
     quicksort(&lista, 0, 26);
     for(i = 0; i<26; i++){
@@ -23,6 +23,7 @@ void imprimePercentual(TadAnalise lista){
     }
 
     printf("Chute de cifra: %d\n", cifraChute(&lista));
+    printf("Cifra usada: %d\n", cifra_usada);
 }
 
 void quicksort(TadAnalise *lista,float first,float last){
@@ -69,7 +70,6 @@ int cifraChute(TadAnalise *lista){
     }
 
     for(i=0; i<5; i++){
-        printf("%d => ", diferenca[i]);
         for(j = 0; j<5; j++){
             if(diferenca[i] == diferenca[j]){
                 ocorrenciaDiferenca[i]++;

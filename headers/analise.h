@@ -15,7 +15,7 @@ typedef struct analise{
 
 int iniciaLista(TadAnalise *lista);
 int calculaPercentual(TadAnalise *lista, int totalDeChar);
-void imprimePercentual(TadAnalise lista);
+void imprimePercentual(TadAnalise lista, int cifra_usada);
 void quicksort(TadAnalise *lista,float first,float last);
 int cifraChute(TadAnalise *lista);
 int indexMax(int *vector);

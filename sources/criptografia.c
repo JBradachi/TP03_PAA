@@ -3,8 +3,7 @@
 int encriptografa(FILE *arqEntrada, FILE *arqSaida, int cifra, int ehRandom, TadAnalise *lista){
     char c;
     int count = 0;
-    printf("Arquivo encriptado: \n");
-    printf("cifra usada = %d ", cifra);
+    printf("Arquivo encriptado: \n\n");
 
     // para o calculo da análise os caracteres alfabéticos foram unidospara se utilizar a tabela que o professor passou
     while ((c = getc(arqEntrada)) != EOF){
@@ -15,7 +14,7 @@ int encriptografa(FILE *arqEntrada, FILE *arqSaida, int cifra, int ehRandom, Tad
         else if(c + cifra <= 126){
             fprintf(arqSaida, "%c", (c+cifra));
             printf("%c", (c+cifra));
-            if(ehRandom){
+            if(ehRandom == 1){
                 if(isalpha(c)!= 0){
                     if(tolower(c) + cifra <= 122){
                         lista->listaDeOcorrencias[(tolower(c)+cifra-97)].ocorrencia+=1;
@@ -32,7 +31,7 @@ int encriptografa(FILE *arqEntrada, FILE *arqSaida, int cifra, int ehRandom, Tad
         else{
             fprintf(arqSaida, "%c", (c+cifra-94));
             printf("%c", (c+cifra-94));
-            if(ehRandom){
+            if(ehRandom == 1){
                 if(isalpha(c)!= 0){
                     if(tolower(c) + cifra <= 122){
                         lista->listaDeOcorrencias[(tolower(c)+cifra-97)].ocorrencia+=1;
@@ -70,13 +69,23 @@ int manipulaArquivo(char *nomeEntrada, int cifra, int ehRandom, int Encripto){
     FILE *arqEntrada, *arqSaida;
     TadAnalise lista;
     int totalDeChar;
+    char path[60];
+    
+    if(Encripto == 1){
+        strcpy(path, "./entradas/arquivoEncriptografado.txt");
+    }else{
+        strcpy(path, "./entradas/arquivoDesencriptografado.txt");
+    }
     iniciaLista(&lista);
+    printf("chega aqui");
     if((arqEntrada = fopen(nomeEntrada, "r")) != NULL){
-        if((arqSaida = fopen("./entradas/arquivoEncriptografado.txt", "w")) != NULL){
-            if(Encripto){
+        if((arqSaida = fopen(path, "w")) != NULL){
+            if(Encripto == 1 && ehRandom == 1){
                 totalDeChar = encriptografa(arqEntrada, arqSaida, cifra, ehRandom, &lista);
                 calculaPercentual(&lista, totalDeChar);
-                imprimePercentual(lista);
+                imprimePercentual(lista, cifra);
+            }else if(Encripto == 1){
+                encriptografa(arqEntrada, arqSaida, cifra, ehRandom, &lista);
             }else{
                 desencriptografia(arqEntrada, arqSaida, cifra);
             }
@@ -87,4 +96,7 @@ int manipulaArquivo(char *nomeEntrada, int cifra, int ehRandom, int Encripto){
     }else{
         printf("Falha na abertura de arquivo");
     }
+
+    fclose(arqEntrada);
+    fclose(arqSaida);
 }

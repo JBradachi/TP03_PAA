@@ -11,11 +11,15 @@ int main(){
     strcat(path, nomeArquivoEntrada);
     strcat(path, ".txt");
 
-    printf("Deseja desencriptografar[ 0 ] ou encriptografar[ 1 ]?");
+    printf("Deseja: \n[ 0 ] desencriptografar\n[ 1 ] encriptografar\n>>> ");
     scanf("%d", &cripto);
-
-    printf("Como deseja gerar a cifra?\n[ 0 ] Digitar\n[ 1 ] Geraração aleatória\n>>> ");
-    scanf("%d", &random);
+    if(cripto){
+        printf("Como deseja gerar a cifra?\n[ 0 ] Digitar\n[ 1 ] Geraração aleatória\n>>> ");
+        scanf("%d", &random);
+    }else{
+        random = 0;
+    }
+    
     if(random){
         srand((unsigned)time(NULL));
         cifra = 1+rand()%25;
