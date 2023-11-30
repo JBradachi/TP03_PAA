@@ -2,7 +2,7 @@
 
 int main(){
     FILE* arqEntrada, arqSaida;
-    int cifra, random;
+    int cifra, random, cripto;
     char nomeArquivoEntrada[40];
     char path[100] = "./entradas/";
 
@@ -10,6 +10,9 @@ int main(){
     scanf("%s", nomeArquivoEntrada);
     strcat(path, nomeArquivoEntrada);
     strcat(path, ".txt");
+
+    printf("Deseja desencriptografar[ 0 ] ou encriptografar[ 1 ]?");
+    scanf("%d", &cripto);
 
     printf("Como deseja gerar a cifra?\n[ 0 ] Digitar\n[ 1 ] Geraração aleatória\n>>> ");
     scanf("%d", &random);
@@ -22,5 +25,5 @@ int main(){
     }
 
 
-    manipulaArquivo(path, cifra, random, 1);
+    manipulaArquivo(path, cifra, random, cripto);
 }

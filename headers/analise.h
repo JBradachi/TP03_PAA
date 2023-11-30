@@ -10,10 +10,12 @@ typedef struct celulaAnalise{
 }TadCelulaAnalise;
 
 typedef struct analise{
-    TadCelulaAnalise listaDeOcorrencias[94];
+    TadCelulaAnalise listaDeOcorrencias[26];
 }TadAnalise;
 
 int iniciaLista(TadAnalise *lista);
 int calculaPercentual(TadAnalise *lista, int totalDeChar);
 void imprimePercentual(TadAnalise lista);
 void quicksort(TadAnalise *lista,float first,float last);
+int cifraChute(TadAnalise *lista);
+int indexMax(int *vector);

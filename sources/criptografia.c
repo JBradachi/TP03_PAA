@@ -18,15 +18,14 @@ int encriptografa(FILE *arqEntrada, FILE *arqSaida, int cifra, int ehRandom, Tad
             if(ehRandom){
                 if(isalpha(c)!= 0){
                     if(tolower(c) + cifra <= 122){
-                        lista->listaDeOcorrencias[(tolower(c)+cifra-32)].ocorrencia+=1;
+                        lista->listaDeOcorrencias[(tolower(c)+cifra-97)].ocorrencia+=1;
                     }else{
-                        lista->listaDeOcorrencias[(tolower(c)+cifra-26-32)].ocorrencia+=1;
+                        lista->listaDeOcorrencias[(tolower(c)+cifra-26-97)].ocorrencia+=1;
                     }
-                }else{
-                    lista->listaDeOcorrencias[c+cifra-32].ocorrencia+=1;
+                    count++;
                 }
                 
-                count++;
+                
             }
             
         }
@@ -36,15 +35,12 @@ int encriptografa(FILE *arqEntrada, FILE *arqSaida, int cifra, int ehRandom, Tad
             if(ehRandom){
                 if(isalpha(c)!= 0){
                     if(tolower(c) + cifra <= 122){
-                        lista->listaDeOcorrencias[(tolower(c)+cifra-32)].ocorrencia+=1;
+                        lista->listaDeOcorrencias[(tolower(c)+cifra-97)].ocorrencia+=1;
                     }else{
-                        lista->listaDeOcorrencias[(tolower(c)+cifra-26-32)].ocorrencia+=1;
+                        lista->listaDeOcorrencias[(tolower(c)+cifra-26-97)].ocorrencia+=1;
                     }
-                }else{
-                    lista->listaDeOcorrencias[(c+cifra-94-32)].ocorrencia+=1;
+                    count++;
                 }
-                
-                count++;
             }
         }
     }
@@ -64,8 +60,8 @@ int desencriptografia(FILE *arqEncripto, FILE *arqDesencripto, int cifra){
             printf("%c", (c-cifra));
         }
         else{
-            fprintf(arqDesencripto, "%c", (c-cifra+95));
-            printf("%c", (c-cifra+95));
+            fprintf(arqDesencripto, "%c", (c-cifra+94));
+            printf("%c", (c-cifra+94));
         }
     }
 }
