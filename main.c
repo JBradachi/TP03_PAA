@@ -31,6 +31,7 @@ int main(){
             case 1:
                 printf("Digite o nome do arquivo (sem a extensão .txt)\n>>> ");
                 scanf("%s", nomeArquivoEntrada);
+                strcpy(path, "./entradas/");
                 strcat(path, nomeArquivoEntrada);
                 strcat(path, ".txt");
                 break;
