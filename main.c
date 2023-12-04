@@ -1,10 +1,14 @@
 #include "./headers/criptografia.h"
+#include <time.h>
+
 
 int main(){
     FILE* arqEntrada, arqSaida;
     int cifra, random, cripto;
     char nomeArquivoEntrada[40];
     char path[100] = "./entradas/";
+    clock_t t;
+
 
     printf("Digite o nome do arquivo (sem a extensão .txt)\n>>> ");
     scanf("%s", nomeArquivoEntrada);
@@ -28,6 +32,17 @@ int main(){
         scanf("%d", &cifra); 
     }
 
+    /**
+     * MEDINDO TEMPO
+     * o t = clock() antes da funcao marca o inicio da execucao
+     * o t = clock() - t calcula o tempo gasto
+     */
 
+    t = clock(); //tempo inicial
     manipulaArquivo(path, cifra, random, cripto);
+    t = clock() - t; //tempo final - tempo inicial
+
+    
+    printf("Tempo de execucao: %lfms\n", ((double)t)/((CLOCKS_PER_SEC/1000)));
+    return 0;
 }
