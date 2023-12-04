@@ -22,7 +22,7 @@ void KMPSearch(char* pat, char* txt)
         }
  
         if (j == M) {
-            printf("Found pattern at index %d ", i - j);
+            printf("Found pattern at index %d\n", i - j);
             j = lps[j - 1];
         }
  
@@ -213,10 +213,10 @@ int forcaBruta(char *resultado, char *padrao){
     return 0;
 }
 
-int manipulaCasamentos(char *nomeEntrada, char *padrao, int algoritmo){
+int manipulaCasamentos(char *nomeEntrada, char *padrao){
     FILE *arqEntrada;
     TadAnalise lista;
-    int ocorrencias=0;
+    int ocorrencias=0, algoritmo;
     long tamanho;
     char c;
     char * resultado;
@@ -251,6 +251,8 @@ int manipulaCasamentos(char *nomeEntrada, char *padrao, int algoritmo){
 
     // Null-terminate the string
     resultado[tamanho] = '\0';
+    printf("Qual algoritmo deseja usar:\n1 - Forca bruta\n2 - Boyer Moore\n3 - KMP\n>>> ");
+    scanf("%d", &algoritmo);
 
     switch (algoritmo)
     {
@@ -262,9 +264,18 @@ int manipulaCasamentos(char *nomeEntrada, char *padrao, int algoritmo){
         break;
     
     case 2:
-        forcaBruta(resultado, padrao);
+        t = clock(); //tempo inicial
+        search(resultado, padrao);
+        t = clock() - t; //tempo final - tempo inicial
+        printf("Tempo de execucao: %lfms\n\n", ((double)t)/((CLOCKS_PER_SEC/1000)));
         break;
-    
+       
+    case 3:
+        t = clock(); //tempo inicial
+        KMPSearch(padrao, resultado);
+        t = clock() - t; //tempo final - tempo inicial
+        printf("Tempo de execucao: %lfms\n\n", ((double)t)/((CLOCKS_PER_SEC/1000)));
+        break;
     default:
         break;
     }

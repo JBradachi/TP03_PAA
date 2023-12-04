@@ -57,9 +57,7 @@ int main(){
             case 4: 
                 printf("Digite o padrao a ser procurado (uma unica palavra):\n>>> ");
                 scanf("%s", &padrao);
-                printf("Qual algoritmo deseja usar:\n1 - Forca bruta\n2 - parara\n>>> ");
-                scanf("%d", &casamento);
-                manipulaCasamentos(nomeArquivoEntrada, padrao, casamento);
+                manipulaCasamentos(nomeArquivoEntrada, padrao);
                 break;
             case 5:
                 exit(0);
