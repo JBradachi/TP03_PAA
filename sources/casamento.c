@@ -1,6 +1,4 @@
-#include "casamento.h"
- 
-void computeLPSArray(char* pat, int M, int* lps);
+#include "../headers/casamento.h"
  
 // Prints occurrences of pat[] in txt[]
 void KMPSearch(char* pat, char* txt)
@@ -77,13 +75,13 @@ void computeLPSArray(char* pat, int M, int* lps)
 }
  
 // Driver code
-int main()
-{
-    char txt[] = "ABABDABACDABABCABAB";
-    char pat[] = "ABABCABAB";
-    KMPSearch(pat, txt);
-    return 0;
-}
+// int main()
+// {
+//     char txt[] = "ABABDABACDABABCABAB";
+//     char pat[] = "ABABCABAB";
+//     KMPSearch(pat, txt);
+//     return 0;
+// }
 
 /* C program for Boyer Moore Algorithm with 
    Good Suffix heuristic to find pattern in
@@ -92,8 +90,7 @@ int main()
 // FIXME: daqui pra baixo é o BM com a heuristica do good suffix ()
  
 // preprocessing for strong good suffix rule
-void preprocess_strong_suffix(int *shift, int *bpos,
-                                char *pat, int m)
+void preprocess_strong_suffix(int *shift, int *bpos, char *pat, int m)
 {
     // m is the length of pattern 
     int i=m, j=m+1;
@@ -124,8 +121,7 @@ void preprocess_strong_suffix(int *shift, int *bpos,
 }
  
 //Preprocessing for case 2
-void preprocess_case2(int *shift, int *bpos,
-                      char *pat, int m)
+void preprocess_case2(int *shift, int *bpos, char *pat, int m)
 {
     int i, j;
     j = bpos[0];
@@ -186,11 +182,11 @@ void search(char *text, char *pat)
  
 }
  
-//Driver 
-int main()
-{
-    char text[] = "ABAAAABAACD";
-    char pat[] = "ABA";
-    search(text, pat);
-    return 0;
-}
+// //Driver 
+// int main()
+// {
+//     char text[] = "ABAAAABAACD";
+//     char pat[] = "ABA";
+//     search(text, pat);
+//     return 0;
+// }

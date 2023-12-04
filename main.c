@@ -1,4 +1,3 @@
-#include "./headers/casamento.h"
 #include <time.h>
 #include "headers/casamento.h"
 
@@ -18,14 +17,13 @@ int main(){
     int opcao;
     FILE* arqEntrada, arqSaida;
     int cifra, random = 0;
-    char path[100] = "./entradas/";
     clock_t t;
 
     
     while (1)
     {
         clear();
-        printf("\nEscolha uma das opcoes abaixo: \n 1 - Entrar com arquivo \n 2 - Encriptografar\n 3 - Descriptografar\n 5 - Sair\n>>> ");
+        printf("\nEscolha uma das opcoes abaixo: \n1 - Entrar com arquivo \n2 - Encriptografar\n3 - Descriptografar\n4 - Buscar\n5 - Sair\n>>> ");
         // ignorar o \n na leitura da entrada
         scanf(" %d%*[^\n]",&opcao);
         switch (opcao)
@@ -37,6 +35,10 @@ int main(){
                 strcat(path, ".txt");
                 break;
             case 2:
+                
+                printf("Como deseja gerar a cifra?\n[ 0 ] Digitar\n[ 1 ] Geraração aleatória\n>>> ");
+                scanf("%d", &random);
+                
                 if(random){
                     srand((unsigned)time(NULL));
                     cifra = 1+rand()%25;
@@ -44,13 +46,18 @@ int main(){
                     printf("Digite a cifra \n>>> ");
                     scanf("%d", &cifra); 
                 }
+                manipulaArquivo(path, cifra, random, 1);
                 break;
             case 3: 
-                t = clock(); //tempo inicial
-                manipulaArquivo(path, cifra, random, cripto);
-                t = clock() - t; //tempo final - tempo inicial
+
+                printf("Digite o valor da cifra:\n>>> ");
+                scanf("%d", &cifra);
+                manipulaArquivo(path, cifra, random, 0);
                 break;
             case 4:
+                t = clock(); //tempo inicial
+                manipulaArquivo(path, cifra, random, 0);
+                t = clock() - t; //tempo final - tempo inicial
                 printf("Tempo de execucao: %lfms\n", ((double)t)/((CLOCKS_PER_SEC/1000)));
                 break;
             case 5:
@@ -64,3 +71,49 @@ int main(){
 
     return 0;
 }
+
+
+/*
+#include "./headers/criptografia.h"
+#include <time.h>
+
+
+int main(){
+    FILE* arqEntrada, arqSaida;
+    int cifra, random, cripto;
+    char nomeArquivoEntrada[40];
+    char path[100] = "./entradas/";
+    clock_t t;
+
+
+    printf("Digite o nome do arquivo (sem a extensão .txt)\n>>> ");
+    scanf("%s", nomeArquivoEntrada);
+    strcat(path, nomeArquivoEntrada);
+    strcat(path, ".txt");
+
+    printf("Deseja: \n[ 0 ] desencriptografar\n[ 1 ] encriptografar\n>>> ");
+    scanf("%d", &cripto);
+    if(cripto){
+        printf("Como deseja gerar a cifra?\n[ 0 ] Digitar\n[ 1 ] Geraração aleatória\n>>> ");
+        scanf("%d", &random);
+    }else{
+        random = 0;
+    }
+    
+    if(random){
+        srand((unsigned)time(NULL));
+        cifra = 1+rand()%25;
+    }else{
+        printf("Digite a cifra \n>>> ");
+        scanf("%d", &cifra); 
+    }
+
+    t = clock(); //tempo inicial
+    manipulaArquivo(path, cifra, random, cripto);
+    t = clock() - t; //tempo final - tempo inicial
+
+    
+    printf("Tempo de execucao: %lfms\n", ((double)t)/((CLOCKS_PER_SEC/1000)));
+    return 0;
+}
+*/
