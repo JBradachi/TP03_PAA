@@ -17,7 +17,6 @@ int main(){
     int opcao, casamento;
     FILE* arqEntrada, arqSaida;
     int cifra, random = 0;
-    clock_t t;
 
     
     while (1)
@@ -60,18 +59,7 @@ int main(){
                 scanf("%s", &padrao);
                 printf("Qual algoritmo deseja usar:\n1 - Forca bruta\n2 - parara\n>>> ");
                 scanf("%d", &casamento);
-                switch (casamento)
-                {
-                case 1:
-                    t = clock(); //tempo inicial
-                    forcaBruta(path, padrao);
-                    t = clock() - t; //tempo final - tempo inicial
-                    printf("Tempo de execucao: %lfms\n", ((double)t)/((CLOCKS_PER_SEC/1000)));
-                    break;
-                
-                default:
-                    break;
-                }
+                manipulaCasamentos(nomeArquivoEntrada, padrao, casamento);
                 break;
             case 5:
                 exit(0);

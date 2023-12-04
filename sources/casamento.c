@@ -192,19 +192,43 @@ void search(char *text, char *pat)
 // }
 
 
-int forcaBruta(char *nomeEntrada, char *padrao){
+int forcaBruta(char *resultado, char *padrao){
+    int mudou = 0, ocorrencias = 0;
+
+    for (long i = 0; i < strlen(resultado) - strlen(padrao) + 1; i++)
+    {   
+        mudou = 0;
+        for (int j = 0; j < strlen(padrao); j++){
+            if (padrao[j] != resultado[i + j]){
+                mudou = 1;
+                break;
+            }
+        }
+        if (mudou == 0){
+            ocorrencias +=1;
+        }
+    }
+    
+    printf("===============================\nAo todo ocorre um total de %d ocorrencias de '%s' no texto\n===============================\n\n", ocorrencias, padrao);
+    return 0;
+}
+
+int manipulaCasamentos(char *nomeEntrada, char *padrao, int algoritmo){
     FILE *arqEntrada;
     TadAnalise lista;
     int ocorrencias=0;
     long tamanho;
     char c;
     char * resultado;
+    clock_t t;
+
 
     char path[60];
     strcpy(path, "./entradas/");
     strcat(path, nomeEntrada);
     strcat(path, ".txt");
-    if ((arqEntrada = fopen(nomeEntrada, "r")) == NULL){
+    printf("%s", path);
+    if ((arqEntrada = fopen(path, "r")) == NULL){
         printf("Falha na abertura de arquivo");
         return 1;
     }
@@ -228,23 +252,21 @@ int forcaBruta(char *nomeEntrada, char *padrao){
     // Null-terminate the string
     resultado[tamanho] = '\0';
 
-    int mudou = 0;
-
-    for (long i = 0; i < strlen(resultado) - strlen(padrao) + 1; i++)
-    {   
-        mudou = 0;
-        for (int j = 0; j < strlen(padrao); j++){
-            if (padrao[j] != resultado[i + j]){
-                mudou = 1;
-                break;
-            }
-        }
-        if (mudou == 0){
-            ocorrencias +=1;
-        }
-    }
+    switch (algoritmo)
+    {
+    case 1:
+        t = clock(); //tempo inicial
+        forcaBruta(resultado, padrao);
+        t = clock() - t; //tempo final - tempo inicial
+        printf("Tempo de execucao: %lfms\n\n", ((double)t)/((CLOCKS_PER_SEC/1000)));
+        break;
     
-    printf("Ao todo ocorre um total de %d ocorrencias de %s no texto", ocorrencias, nomeEntrada);
-
+    case 2:
+        forcaBruta(resultado, padrao);
+        break;
+    
+    default:
+        break;
+    }
     fclose(arqEntrada);
 }
