@@ -13,8 +13,8 @@ void pausar(){
 int main(){
     char mostrarPossibilidades, mostraTempReal;
     char path[100] = "./entradas/";
-    char nomeArquivoEntrada[30] = "teste copy.txt";
-    int opcao;
+    char nomeArquivoEntrada[30] = "teste copy.txt", padrao[20];
+    int opcao, casamento;
     FILE* arqEntrada, arqSaida;
     int cifra, random = 0;
     clock_t t;
@@ -55,11 +55,23 @@ int main(){
                 scanf("%d", &cifra);
                 manipulaArquivo(path, cifra, random, 0);
                 break;
-            case 4:
-                t = clock(); //tempo inicial
-                manipulaArquivo(path, cifra, random, 0);
-                t = clock() - t; //tempo final - tempo inicial
-                printf("Tempo de execucao: %lfms\n", ((double)t)/((CLOCKS_PER_SEC/1000)));
+            case 4: 
+                printf("Digite o padrao a ser procurado (uma unica palavra):\n>>> ");
+                scanf("%s", &padrao);
+                printf("Qual algoritmo deseja usar:\n1 - Forca bruta\n2 - parara\n>>> ");
+                scanf("%d", &casamento);
+                switch (casamento)
+                {
+                case 1:
+                    t = clock(); //tempo inicial
+                    forcaBruta(path, padrao);
+                    t = clock() - t; //tempo final - tempo inicial
+                    printf("Tempo de execucao: %lfms\n", ((double)t)/((CLOCKS_PER_SEC/1000)));
+                    break;
+                
+                default:
+                    break;
+                }
                 break;
             case 5:
                 exit(0);

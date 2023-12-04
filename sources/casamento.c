@@ -190,3 +190,61 @@ void search(char *text, char *pat)
 //     search(text, pat);
 //     return 0;
 // }
+
+
+int forcaBruta(char *nomeEntrada, char *padrao){
+    FILE *arqEntrada;
+    TadAnalise lista;
+    int ocorrencias=0;
+    long tamanho;
+    char c;
+    char * resultado;
+
+    char path[60];
+    strcpy(path, "./entradas/");
+    strcat(path, nomeEntrada);
+    strcat(path, ".txt");
+    if ((arqEntrada = fopen(nomeEntrada, "r")) == NULL){
+        printf("Falha na abertura de arquivo");
+        return 1;
+    }
+    fseek(arqEntrada, 0, SEEK_END);
+    tamanho = ftell(arqEntrada);
+    fseek(arqEntrada, 0, SEEK_SET);
+
+    resultado = (char *) malloc(tamanho + 1);
+    if (resultado == NULL){
+        printf("Erro de alocacao");
+        return 1;
+    }
+    size_t bytesRead = fread(resultado, 1, tamanho, arqEntrada);
+    if (0 == 1) {
+        fprintf(stderr, "Error reading file\n");
+        free(resultado);
+        fclose(arqEntrada);
+        return 1;
+    }
+
+    // Null-terminate the string
+    resultado[tamanho] = '\0';
+
+    int mudou = 0;
+
+    for (long i = 0; i < strlen(resultado) - strlen(padrao) + 1; i++)
+    {   
+        mudou = 0;
+        for (int j = 0; j < strlen(padrao); j++){
+            if (padrao[j] != resultado[i + j]){
+                mudou = 1;
+                break;
+            }
+        }
+        if (mudou == 0){
+            ocorrencias +=1;
+        }
+    }
+    
+    printf("Ao todo ocorre um total de %d ocorrencias de %s no texto", ocorrencias, nomeEntrada);
+
+    fclose(arqEntrada);
+}
