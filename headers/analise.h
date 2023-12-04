@@ -3,6 +3,15 @@
 #include <string.h>
 #include <time.h>
 #include <ctype.h>
+#ifdef _WIN32
+    #include <windows.h>
+    #define SLEEP_MS(ms) Sleep(ms)
+    #define clear() system("cls"); 
+#else
+    #include <unistd.h>
+    #define clear() system("clear");
+    #define SLEEP_MS(ms) usleep(ms * 1000)
+#endif
 
 typedef struct celulaAnalise{
     char caractere;
