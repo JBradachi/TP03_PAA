@@ -22,6 +22,8 @@ int main(){
     while (1)
     {
         clear();
+        opcao = 0;
+        strcpy(padrao, "");
         printf("\nEscolha uma das opcoes abaixo: \n1 - Entrar com arquivo \n2 - Encriptografar\n3 - Descriptografar\n4 - Buscar\n5 - Sair\n>>> ");
         // ignorar o \n na leitura da entrada
         scanf(" %d%*[^\n]",&opcao);
@@ -56,7 +58,7 @@ int main(){
                 break;
             case 4: 
                 printf("Digite o padrao a ser procurado (uma unica palavra):\n>>> ");
-                scanf("%s", &padrao);
+                scanf(" %s%*[^\n]", &padrao);
                 manipulaCasamentos(nomeArquivoEntrada, padrao);
                 break;
             case 5:
@@ -70,49 +72,3 @@ int main(){
 
     return 0;
 }
-
-
-/*
-#include "./headers/criptografia.h"
-#include <time.h>
-
-
-int main(){
-    FILE* arqEntrada, arqSaida;
-    int cifra, random, cripto;
-    char nomeArquivoEntrada[40];
-    char path[100] = "./entradas/";
-    clock_t t;
-
-
-    printf("Digite o nome do arquivo (sem a extensão .txt)\n>>> ");
-    scanf("%s", nomeArquivoEntrada);
-    strcat(path, nomeArquivoEntrada);
-    strcat(path, ".txt");
-
-    printf("Deseja: \n[ 0 ] desencriptografar\n[ 1 ] encriptografar\n>>> ");
-    scanf("%d", &cripto);
-    if(cripto){
-        printf("Como deseja gerar a cifra?\n[ 0 ] Digitar\n[ 1 ] Geraração aleatória\n>>> ");
-        scanf("%d", &random);
-    }else{
-        random = 0;
-    }
-    
-    if(random){
-        srand((unsigned)time(NULL));
-        cifra = 1+rand()%25;
-    }else{
-        printf("Digite a cifra \n>>> ");
-        scanf("%d", &cifra); 
-    }
-
-    t = clock(); //tempo inicial
-    manipulaArquivo(path, cifra, random, cripto);
-    t = clock() - t; //tempo final - tempo inicial
-
-    
-    printf("Tempo de execucao: %lfms\n", ((double)t)/((CLOCKS_PER_SEC/1000)));
-    return 0;
-}
-*/

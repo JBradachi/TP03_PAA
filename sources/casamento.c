@@ -3,6 +3,7 @@
 // Prints occurrences of pat[] in txt[]
 void KMPSearch(char* pat, char* txt)
 {
+    printf("RESOLUCAO POR KMP\n");
     int M = strlen(pat);
     int N = strlen(txt);
  
@@ -12,7 +13,7 @@ void KMPSearch(char* pat, char* txt)
  
     // Preprocess the pattern (calculate lps[] array)
     computeLPSArray(pat, M, lps);
- 
+    int contar = 0;
     int i = 0; // index for txt[]
     int j = 0; // index for pat[]
     while ((N - i) >= (M - j)) {
@@ -22,7 +23,8 @@ void KMPSearch(char* pat, char* txt)
         }
  
         if (j == M) {
-            printf("Found pattern at index %d\n", i - j);
+            printf("Padrao encontrado na posicao %d\n", i - j);
+            contar +=1;
             j = lps[j - 1];
         }
  
@@ -36,6 +38,7 @@ void KMPSearch(char* pat, char* txt)
                 i = i + 1;
         }
     }
+    printf("===============================\nAo todo ocorre um total de %d ocorrencias de '%s' no texto\n===============================\n\n", contar, pat);
 }
  
 // Fills lps[] for given pattern pat[0..M-1]
@@ -143,6 +146,7 @@ void preprocess_case2(int *shift, int *bpos, char *pat, int m)
   Boyer Moore algorithm with Good suffix rule */
 void search(char *text, char *pat)
 {
+    printf("RESOLUCAO POR BM\n");
     // s is shift of the pattern with respect to text
     int s=0, j;
     int m = strlen(pat);
@@ -156,6 +160,7 @@ void search(char *text, char *pat)
     //do preprocessing
     preprocess_strong_suffix(shift, bpos, pat, m);
     preprocess_case2(shift, bpos, pat, m);
+    int contar = 0;
  
     while(s <= n-m)
     {
@@ -171,7 +176,8 @@ void search(char *text, char *pat)
              will become -1 after the above loop */
         if (j<0)
         {
-            printf("pattern occurs at shift = %d\n", s);
+            printf("Padrao encontrado na posicao %d\n", s);
+            contar +=1;
             s += shift[0];
         }
         else
@@ -179,7 +185,7 @@ void search(char *text, char *pat)
               shift[j+1] times  */
             s += shift[j+1];
     }
- 
+    printf("===============================\nAo todo ocorre um total de %d ocorrencias de '%s' no texto\n===============================\n\n", contar, pat);
 }
  
 // //Driver 
@@ -194,6 +200,7 @@ void search(char *text, char *pat)
 
 int forcaBruta(char *resultado, char *padrao){
     int mudou = 0, ocorrencias = 0;
+    printf("RESOLUCAO POR FORCA BRUTA\n");
 
     for (long i = 0; i < strlen(resultado) - strlen(padrao) + 1; i++)
     {   
@@ -205,6 +212,7 @@ int forcaBruta(char *resultado, char *padrao){
             }
         }
         if (mudou == 0){
+            printf("Padrao encontrado na posicao %d\n", i);
             ocorrencias +=1;
         }
     }
@@ -217,9 +225,8 @@ int manipulaCasamentos(char *nomeEntrada, char *padrao){
     FILE *arqEntrada;
     TadAnalise lista;
     int ocorrencias=0, algoritmo;
-    long tamanho;
+    size_t tamanho;
     char c;
-    char * resultado;
     clock_t t;
 
 
@@ -227,7 +234,6 @@ int manipulaCasamentos(char *nomeEntrada, char *padrao){
     strcpy(path, "./entradas/");
     strcat(path, nomeEntrada);
     strcat(path, ".txt");
-    printf("%s", path);
     if ((arqEntrada = fopen(path, "r")) == NULL){
         printf("Falha na abertura de arquivo");
         return 1;
@@ -235,22 +241,20 @@ int manipulaCasamentos(char *nomeEntrada, char *padrao){
     fseek(arqEntrada, 0, SEEK_END);
     tamanho = ftell(arqEntrada);
     fseek(arqEntrada, 0, SEEK_SET);
-
-    resultado = (char *) malloc(tamanho + 1);
+    char *resultado = (char *)malloc(sizeof(char) * (tamanho + 10));
     if (resultado == NULL){
         printf("Erro de alocacao");
         return 1;
     }
-    size_t bytesRead = fread(resultado, 1, tamanho, arqEntrada);
-    if (0 == 1) {
-        fprintf(stderr, "Error reading file\n");
-        free(resultado);
-        fclose(arqEntrada);
-        return 1;
-    }
 
-    // Null-terminate the string
-    resultado[tamanho] = '\0';
+    int i = 0;
+    while ((c = fgetc(arqEntrada)) != EOF)
+    {
+        resultado[i] = c;
+        i++;
+    }
+    resultado[i] = '\0';
+
     printf("Qual algoritmo deseja usar:\n1 - Forca bruta\n2 - Boyer Moore\n3 - KMP\n>>> ");
     scanf("%d", &algoritmo);
 
@@ -279,5 +283,7 @@ int manipulaCasamentos(char *nomeEntrada, char *padrao){
     default:
         break;
     }
+    printf("Saiu");
+    free(resultado);
     fclose(arqEntrada);
 }
