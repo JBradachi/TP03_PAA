@@ -1,5 +1,36 @@
 #include "../headers/casamento.h"
  
+
+ #define MAXCHAR 256
+
+void ShiftAnd(char *texto, int tamanhoTexto, char *padrao, int tamanhoPadrao){
+    int ocorrencias = 0;
+    printf("Usando esse");
+
+  if (tamanhoPadrao > tamanhoTexto)     // se padrao > texto retorna pra main sem casamentos
+    return;
+
+  int M[MAXCHAR], R = 0;
+  for (int i = 0; i < MAXCHAR; i++)       // pré - processamento
+    M[i] = 0;
+
+  for (int i = 1; i <= tamanhoPadrao; i++)
+    M[padrao[i-1] + 127] |= 1 << (tamanhoPadrao - i);
+
+  for (int i = 0; i < tamanhoTexto; i++) {              // busca pelo padrão no texto
+    R = ((R >> 1) | (1 << (tamanhoPadrao - 1))) & M[texto[i] + 127];
+    if ((R & 1) != 0){
+      if (i - tamanhoPadrao + 2 > 0){
+        printf( "ocorrencia em: %d\n", i - tamanhoPadrao + 2);
+        ocorrencias ++;
+
+      } // encontrou
+    }
+  }
+    printf("===============================\nAo todo ocorre um total de %d ocorrencias de '%s' no texto\n===============================\n\n", ocorrencias, padrao);
+}
+
+
 // Prints occurrences of pat[] in txt[]
 void KMPSearch(char* pat, char* txt)
 {
@@ -255,7 +286,7 @@ int manipulaCasamentos(char *nomeEntrada, char *padrao){
     }
     resultado[i] = '\0';
 
-    printf("Qual algoritmo deseja usar:\n1 - Forca bruta\n2 - Boyer Moore\n3 - KMP\n>>> ");
+    printf("Qual algoritmo deseja usar:\n1 - Forca bruta\n2 - Boyer Moore\n3 - KMP\n4 - ShiftAnd\n>>> ");
     scanf("%d", &algoritmo);
 
     switch (algoritmo)
@@ -280,10 +311,17 @@ int manipulaCasamentos(char *nomeEntrada, char *padrao){
         t = clock() - t; //tempo final - tempo inicial
         printf("Tempo de execucao: %lfms\n\n", ((double)t)/((CLOCKS_PER_SEC/1000)));
         break;
+   
+    case 4:
+        t = clock(); //tempo inicial
+        printf("Usando esse");
+        ShiftAnd(resultado, strlen(resultado), padrao, strlen(padrao));
+        t = clock() - t; //tempo final - tempo inicial
+        printf("Tempo de execucao: %lfms\n\n", ((double)t)/((CLOCKS_PER_SEC/1000)));
+        break;
     default:
         break;
     }
-    printf("Saiu");
     free(resultado);
     fclose(arqEntrada);
 }
