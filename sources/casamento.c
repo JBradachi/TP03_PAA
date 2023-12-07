@@ -7,19 +7,29 @@ void ShiftAnd(char *texto, int tamanhoTexto, char *padrao, int tamanhoPadrao){
     int ocorrencias = 0;
     printf("PESQUISA COM SHIFT AND:\n");
 
-  if (tamanhoPadrao > tamanhoTexto)     // se padrao > texto retorna pra main sem casamentos
-    return;
+  if (tamanhoPadrao > tamanhoTexto) return; // Se o padrão for maior que o texto, não é possivel haver casamentos
 
-  int M[MAXCHAR], R = 0;
+  int MascaraDeBits[MAXCHAR], R = 0; //As mascaras são utilizadas para comparar as letras no algoritmo
   for (int i = 0; i < MAXCHAR; i++)       // pré - processamento
-    M[i] = 0;
+    MascaraDeBits[i] = 0; // A table ascii vai de 0 a 127. Assim, cria-se um vetor com todos esses valores
 
   for (int i = 1; i <= tamanhoPadrao; i++)
-    M[padrao[i-1] + 127] |= 1 << (tamanhoPadrao - i);
+    /** preenche a mascara da forma estudada em sala:
+     * 1 << (tamanhoPadrao - 1) ===> vetor que possue um 1 coincidente com a posicao da letra atual
+     * É adicionado 127 a todos os asciis (não entendi direito o porque)
+     * 
+     */
+    MascaraDeBits[padrao[i-1] + 127] |= 1 << (tamanhoPadrao - i);  
 
-  for (int i = 0; i < tamanhoTexto; i++) {              // busca pelo padrão no texto
-    R = ((R >> 1) | (1 << (tamanhoPadrao - 1))) & M[texto[i] + 127];
-    if ((R & 1) != 0){
+
+  for (int i = 0; i < tamanhoTexto; i++) {   
+    /**
+     * (1 << (tamanhoPadrao - 1)) =  10^(m-1) do algoritmo visto em sala
+     * 
+     * 
+     */
+    R = ((R >> 1) | (1 << (tamanhoPadrao - 1))) & MascaraDeBits[texto[i] + 127];
+    if ((R & 1) != 0){  // Se a ultima posição for 1, significa que encontrou o padrão
       if (i - tamanhoPadrao + 2 > 0){
         printf( "ocorrencia em: %d\n", i - tamanhoPadrao + 2);
         ocorrencias ++;
@@ -295,7 +305,6 @@ int manipulaCasamentos(char *nomeEntrada, char *padrao){
    
     case 4:
         t = clock(); //tempo inicial
-        printf("Usando esse");
         ShiftAnd(resultado, strlen(resultado), padrao, strlen(padrao));
         t = clock() - t; //tempo final - tempo inicial
         printf("Tempo de execucao: %lfms\n\n", ((double)t)/((CLOCKS_PER_SEC/1000)));
