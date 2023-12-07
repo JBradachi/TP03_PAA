@@ -51,13 +51,12 @@ int main(){
                 manipulaArquivo(path, cifra, random, 1);
                 break;
             case 3: 
-
                 printf("Digite o valor da cifra:\n>>> ");
                 scanf("%d", &cifra);
                 manipulaArquivo(path, cifra, random, 0);
                 break;
             case 4: 
-                printf("Digite o padrao a ser procurado (uma unica palavra):\n>>> ");
+                printf("Digite o padrao a ser procurado (palavra ou frase sem paragrafo):\n>>> ");
                 scanf(" %s%*[^\n]", &padrao);
                 manipulaCasamentos(nomeArquivoEntrada, padrao);
                 break;

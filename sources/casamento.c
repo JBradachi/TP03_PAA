@@ -5,7 +5,7 @@
 
 void ShiftAnd(char *texto, int tamanhoTexto, char *padrao, int tamanhoPadrao){
     int ocorrencias = 0;
-    printf("Usando esse");
+    printf("PESQUISA COM SHIFT AND:\n");
 
   if (tamanhoPadrao > tamanhoTexto)     // se padrao > texto retorna pra main sem casamentos
     return;
@@ -32,23 +32,23 @@ void ShiftAnd(char *texto, int tamanhoTexto, char *padrao, int tamanhoPadrao){
 
 
 // Prints occurrences of pat[] in txt[]
-void KMPSearch(char* pat, char* txt)
+void KMP(char* padrao, char* texto)
 {
-    printf("RESOLUCAO POR KMP\n");
-    int M = strlen(pat);
-    int N = strlen(txt);
+    printf("PESQUISA COM KMP:\n");
+    int M = strlen(padrao);
+    int N = strlen(texto);
  
     // create lps[] that will hold the longest prefix suffix
     // values for pattern
-    int lps[M];
+    int maiorPrefixoSufixo[M];
  
     // Preprocess the pattern (calculate lps[] array)
-    computeLPSArray(pat, M, lps);
+    calculaVetorMaiorPrefixoSufixo(padrao, M, maiorPrefixoSufixo);
     int contar = 0;
     int i = 0; // index for txt[]
     int j = 0; // index for pat[]
     while ((N - i) >= (M - j)) {
-        if (pat[j] == txt[i]) {
+        if (padrao[j] == texto[i]) {
             j++;
             i++;
         }
@@ -56,36 +56,36 @@ void KMPSearch(char* pat, char* txt)
         if (j == M) {
             printf("Padrao encontrado na posicao %d\n", i - j);
             contar +=1;
-            j = lps[j - 1];
+            j = maiorPrefixoSufixo[j - 1];
         }
  
         // mismatch after j matches
-        else if (i < N && pat[j] != txt[i]) {
+        else if (i < N && padrao[j] != texto[i]) {
             // Do not match lps[0..lps[j-1]] characters,
             // they will match anyway
             if (j != 0)
-                j = lps[j - 1];
+                j = maiorPrefixoSufixo[j - 1];
             else
                 i = i + 1;
         }
     }
-    printf("===============================\nAo todo ocorre um total de %d ocorrencias de '%s' no texto\n===============================\n\n", contar, pat);
+    printf("===============================\nAo todo ocorre um total de %d ocorrencias de '%s' no texto\n===============================\n\n", contar, padrao);
 }
  
 // Fills lps[] for given pattern pat[0..M-1]
-void computeLPSArray(char* pat, int M, int* lps)
+void calculaVetorMaiorPrefixoSufixo(char* padrao, int M, int* maiorPrefixoSufixo)
 {
     // length of the previous longest prefix suffix
     int len = 0;
  
-    lps[0] = 0; // lps[0] is always 0
+    maiorPrefixoSufixo[0] = 0; // lps[0] is always 0
  
     // the loop calculates lps[i] for i = 1 to M-1
     int i = 1;
     while (i < M) {
-        if (pat[i] == pat[len]) {
+        if (padrao[i] == padrao[len]) {
             len++;
-            lps[i] = len;
+            maiorPrefixoSufixo[i] = len;
             i++;
         }
         else // (pat[i] != pat[len])
@@ -94,28 +94,19 @@ void computeLPSArray(char* pat, int M, int* lps)
             // AAACAAAA and i = 7. The idea is similar
             // to search step.
             if (len != 0) {
-                len = lps[len - 1];
+                len = maiorPrefixoSufixo[len - 1];
  
                 // Also, note that we do not increment
                 // i here
             }
             else // if (len == 0)
             {
-                lps[i] = 0;
+                maiorPrefixoSufixo[i] = 0;
                 i++;
             }
         }
     }
 }
- 
-// Driver code
-// int main()
-// {
-//     char txt[] = "ABABDABACDABABCABAB";
-//     char pat[] = "ABABCABAB";
-//     KMPSearch(pat, txt);
-//     return 0;
-// }
 
 /* C program for Boyer Moore Algorithm with 
    Good Suffix heuristic to find pattern in
@@ -218,20 +209,10 @@ void search(char *text, char *pat)
     }
     printf("===============================\nAo todo ocorre um total de %d ocorrencias de '%s' no texto\n===============================\n\n", contar, pat);
 }
- 
-// //Driver 
-// int main()
-// {
-//     char text[] = "ABAAAABAACD";
-//     char pat[] = "ABA";
-//     search(text, pat);
-//     return 0;
-// }
-
 
 int forcaBruta(char *resultado, char *padrao){
     int mudou = 0, ocorrencias = 0;
-    printf("RESOLUCAO POR FORCA BRUTA\n");
+    printf("PESQUISA COM FORCA BRUTA\n");
 
     for (long i = 0; i < strlen(resultado) - strlen(padrao) + 1; i++)
     {   
@@ -307,7 +288,7 @@ int manipulaCasamentos(char *nomeEntrada, char *padrao){
        
     case 3:
         t = clock(); //tempo inicial
-        KMPSearch(padrao, resultado);
+        KMP(padrao, resultado);
         t = clock() - t; //tempo final - tempo inicial
         printf("Tempo de execucao: %lfms\n\n", ((double)t)/((CLOCKS_PER_SEC/1000)));
         break;

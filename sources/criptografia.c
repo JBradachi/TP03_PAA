@@ -77,7 +77,6 @@ int manipulaArquivo(char *nomeEntrada, int cifra, int ehRandom, int Encripto){
         strcpy(path, "./entradas/arquivoDesencriptografado.txt");
     }
     iniciaLista(&lista);
-    printf("chega aqui");
     if((arqEntrada = fopen(nomeEntrada, "r")) != NULL){
         if((arqSaida = fopen(path, "w")) != NULL){
             if(Encripto == 1 && ehRandom == 1){
@@ -92,11 +91,13 @@ int manipulaArquivo(char *nomeEntrada, int cifra, int ehRandom, int Encripto){
             
         }else{
             printf("Falha na criação de arquivo");    
+            fclose(arqEntrada);
+            return 1;
         }
     }else{
         printf("Falha na abertura de arquivo");
+        return 1;
     }
-
     fclose(arqEntrada);
     fclose(arqSaida);
 }
