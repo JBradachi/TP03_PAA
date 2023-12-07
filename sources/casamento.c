@@ -29,7 +29,7 @@ void ShiftAnd(char *texto, int tamanhoTexto, char *padrao, int tamanhoPadrao){
     R = ((R >> 1) | (1 << (tamanhoPadrao - 1))) & MascaraDeBits[texto[i]];  // Essa linha representa o R' estudado em sala
     if ((R & 1) != 0){  // Se a ultima posição for 1, significa que encontrou o padrão
       if (i - tamanhoPadrao + 2 > 0){ // Marca se o padrão não é maior do que o texto restante
-        printf( "Padrao encontrado na posicao %d\n", i - tamanhoPadrao + 2);
+        printf( "Padrao encontrado na posicao %d\n", i - tamanhoPadrao + 1);
         ocorrencias ++;
       }
     }
@@ -274,7 +274,7 @@ int manipulaCasamentos(char *nomeEntrada, char *padrao){
     }
     resultado[i] = '\0';
 
-    printf("Qual algoritmo deseja usar:\n1 - Forca bruta\n2 - Boyer Moore\n3 - KMP\n4 - ShiftAnd\n>>> ");
+    printf("Qual algoritmo deseja usar:\n1 - Forca bruta\n2 - Boyer Moore, heuristica ocorrencia\n3 - ShiftAnd\n>>> ");
     scanf("%d", &algoritmo);
 
     switch (algoritmo)
@@ -288,21 +288,20 @@ int manipulaCasamentos(char *nomeEntrada, char *padrao){
     
     case 2:
         t = clock(); //tempo inicial
-        search(resultado, padrao);
+        searchBad(resultado, padrao);
+        t = clock() - t; //tempo final - tempo inicial
+        printf("Tempo de execucao: %lfms\n\n", ((double)t)/((CLOCKS_PER_SEC/1000)));
+        break;
+    case 3:
+        t = clock(); //tempo inicial
+        ShiftAnd(resultado, strlen(resultado), padrao, strlen(padrao));
         t = clock() - t; //tempo final - tempo inicial
         printf("Tempo de execucao: %lfms\n\n", ((double)t)/((CLOCKS_PER_SEC/1000)));
         break;
        
-    case 3:
-        t = clock(); //tempo inicial
-        KMP(padrao, resultado);
-        t = clock() - t; //tempo final - tempo inicial
-        printf("Tempo de execucao: %lfms\n\n", ((double)t)/((CLOCKS_PER_SEC/1000)));
-        break;
-   
     case 4:
         t = clock(); //tempo inicial
-        ShiftAnd(resultado, strlen(resultado), padrao, strlen(padrao));
+        KMP(padrao, resultado);
         t = clock() - t; //tempo final - tempo inicial
         printf("Tempo de execucao: %lfms\n\n", ((double)t)/((CLOCKS_PER_SEC/1000)));
         break;
@@ -312,3 +311,94 @@ int manipulaCasamentos(char *nomeEntrada, char *padrao){
     free(resultado);
     fclose(arqEntrada);
 }
+
+ 
+// A utility function to get maximum of two integers
+int maximo (int a, int b) { 
+    return (a > b)? a: b; 
+}
+ 
+// The preprocessing function for Boyer Moore's
+// bad character heuristic
+void badCharHeuristic( char *str, int size, 
+                        int badchar[MAXCHAR])
+{
+    int i;
+ 
+    // Inicia tudo com -1
+    for (i = 0; i < MAXCHAR; i++) badchar[i] = -1; 
+ 
+    // Fill the actual value of last occurrence 
+    // of a character
+    for (i = 0; i < size; i++)  badchar[(int) str[i]] = i;  
+    // Para a posicao do caracter na tabela ascii, guarda onde ele ocorre pela ultima vez no padrão (ou seja, se ele não ocorre, fica -1. Dessa forma, temos todos os caracteres da tabela ascii mapeados com suas respectivas ocorrencias no padrao). 
+    // Outros algoritmos usam uma estratégia muito parecida de criar um vetor do tamanho da tabela ascii. Dessa forma, é possivel acessar diretamente o valor correspondente usando seu valor ascii
+}
+ 
+/* A pattern searching function that uses Bad
+   Character Heuristic of Boyer Moore Algorithm */
+void searchBad( char *texto,  char *padrao){
+    printf("PESQUISA COM BOYER-MOORE, HEURÍSTICA OCORRENCIA\n");
+    int tamanhoPadrao = strlen(padrao);
+    int tamanhoTexto = strlen(texto);
+    int ocorrencias = 0;
+ 
+    int vetorOcorrencias[MAXCHAR];  // Cria um vetor do tamanho da tabela ascii
+ 
+    /* Preenche o vetor com as ocorrencias dos caracteres, para ser possivel saber quanto é necessário pular */
+    badCharHeuristic(padrao, tamanhoPadrao, vetorOcorrencias);
+ 
+    int s = 0;  // s marca a posição de inicio da "janela" no texto
+    while(s <= (tamanhoTexto - tamanhoPadrao))
+    {
+        int j = tamanhoPadrao -1 ;
+
+        /**
+         * Para cada posição no padrão e no texto, da direita para a esquerda, compara os padrões
+         * nesse caso, 
+         */
+        while(j >= 0 && padrao[j] == texto[s+j])
+            j--;
+ 
+
+        // Se todo o loop for executado por completo, todos os caracteres deram match, e portanto há uma ocorrencia do padrão naquela posição 
+        if (j < 0)
+        {
+            printf("Padrao encontrado na posicao %d\n", s);
+ 
+            /* Shift the pattern so that the next 
+               character in text aligns with the last 
+               occurrence of it in pattern.
+               The condition s+m < n is necessary for 
+               the case when pattern occurs at the end 
+               of text */
+            s += (s+ tamanhoPadrao < tamanhoTexto)? tamanhoPadrao-vetorOcorrencias[texto[s+tamanhoPadrao]] : 1;
+            ocorrencias ++;
+ 
+        }
+ 
+        else // caso não de match, 
+            /* Shift the pattern so that the bad character
+               in text aligns with the last occurrence of
+               it in pattern. The max function is used to
+               make sure that we get a positive shift. 
+               We may get a negative shift if the last 
+               occurrence  of bad character in pattern
+               is on the right side of the current 
+               character. */
+
+               // vetorOcorrencias[texto[s + j]] pega a ultima ocorrencia do caracter que deu mismatch no texto, ou seja, na posição s + j
+               // 
+            s += maximo(1, j - vetorOcorrencias[texto[s+j]]);
+    }
+        printf("===============================\nAo todo ocorre um total de %d ocorrencias de '%s' no texto\n===============================\n\n", ocorrencias, padrao);
+}
+ 
+/* Driver program to test above function */
+// int main()
+// {
+//     char txt[] = "ABAAABCD";
+//     char pat[] = "ABC";
+//     search(txt, pat);
+//     return 0;
+// }

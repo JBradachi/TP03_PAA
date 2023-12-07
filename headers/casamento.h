@@ -7,3 +7,4 @@ void preprocess_strong_suffix(int *shift, int *bpos, char *pat, int m);
 int manipulaCasamentos(char *nomeEntrada, char *padrao);
 int forcaBruta(char *resultado, char *padrao);
 void ShiftAnd(char *texto, int tamanhoTexto, char *padrao, int tamanhoPadrao);
+void searchBad( char *txt,  char *pat);
