@@ -13,7 +13,7 @@ void pausar(){
 int main(){
     char mostrarPossibilidades, mostraTempReal;
     char path[100] = "./entradas/";
-    char nomeArquivoEntrada[30] = "teste copy.txt", padrao[20];
+    char nomeArquivoEntrada[30] = "teste copy.txt", padrao[30];
     int opcao, casamento;
     FILE* arqEntrada, arqSaida;
     int cifra, random = 0;
