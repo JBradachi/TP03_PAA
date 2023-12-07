@@ -59,7 +59,7 @@ int main(){
                 printf("Digite o padrao a ser procurado (palavra ou frase sem paragrafo):\n>>> ");
                 // scanf("%s", &padrao);
                 fseek(stdin,0,SEEK_END);
-                gets(&padrao);
+                gets(padrao);
   
                 manipulaCasamentos(nomeArquivoEntrada, padrao);
                 break;

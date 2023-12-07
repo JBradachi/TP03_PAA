@@ -13,6 +13,8 @@
     #define SLEEP_MS(ms) usleep(ms * 1000)
 #endif
 
+#define MAXASCII 256
+
 typedef struct celulaAnalise{
     char caractere;
     float ocorrencia;
