@@ -29,7 +29,7 @@ void ShiftAnd(char *texto, int tamanhoTexto, char *padrao, int tamanhoPadrao){
     R = ((R >> 1) | (1 << (tamanhoPadrao - 1))) & MascaraDeBits[texto[i]];  // Essa linha representa o R' estudado em sala
     if ((R & 1) != 0){  // Se a ultima posição for 1, significa que encontrou o padrão
       if (i - tamanhoPadrao + 2 > 0){ // Marca se o padrão não é maior do que o texto restante
-        printf( "ocorrencia em: %d\n", i - tamanhoPadrao + 2);
+        printf( "Padrao encontrado na posicao %d\n", i - tamanhoPadrao + 2);
         ocorrencias ++;
       }
     }
