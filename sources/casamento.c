@@ -338,7 +338,7 @@ void badCharHeuristic( char *str, int size,
 /* A pattern searching function that uses Bad
    Character Heuristic of Boyer Moore Algorithm */
 void searchBad( char *texto,  char *padrao){
-    printf("PESQUISA COM BOYER-MOORE, HEURÍSTICA OCORRENCIA\n");
+    printf("PESQUISA COM BOYER-MOORE, HEURISTICA OCORRENCIA\n");
     int tamanhoPadrao = strlen(padrao);
     int tamanhoTexto = strlen(texto);
     int ocorrencias = 0;

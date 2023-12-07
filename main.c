@@ -30,7 +30,7 @@ int main(){
         switch (opcao)
         {
             case 1:
-                printf("Digite o nome do arquivo (sem a extensão .txt)\n>>> ");
+                printf("Digite o nome do arquivo (sem a extensao .txt)\n>>> ");
                 scanf("%s", nomeArquivoEntrada);
                 strcpy(path, "./entradas/");
                 strcat(path, nomeArquivoEntrada);
