@@ -15,26 +15,23 @@ void ShiftAnd(char *texto, int tamanhoTexto, char *padrao, int tamanhoPadrao){
 
   for (int i = 1; i <= tamanhoPadrao; i++)
     /** preenche a mascara da forma estudada em sala:
-     * 1 << (tamanhoPadrao - 1) ===> vetor que possue um 1 coincidente com a posicao da letra atual
+     * 1 << (tamanhoPadrao - i) ===> vetor que possue um 1 coincidente com a posicao da letra atual
      * É adicionado 127 a todos os asciis (não entendi direito o porque)
-     * 
+     * "|=" significa que a mascara de bista recebera o resultado dela "or"  (tamanhoPadrao - i) 
      */
-    MascaraDeBits[padrao[i-1] + 127] |= 1 << (tamanhoPadrao - i);  
+    MascaraDeBits[padrao[i-1]] |= 1 << (tamanhoPadrao - i);  
 
 
   for (int i = 0; i < tamanhoTexto; i++) {   
     /**
      * (1 << (tamanhoPadrao - 1)) =  10^(m-1) do algoritmo visto em sala
-     * 
-     * 
      */
-    R = ((R >> 1) | (1 << (tamanhoPadrao - 1))) & MascaraDeBits[texto[i] + 127];
+    R = ((R >> 1) | (1 << (tamanhoPadrao - 1))) & MascaraDeBits[texto[i]];  // Essa linha representa o R' estudado em sala
     if ((R & 1) != 0){  // Se a ultima posição for 1, significa que encontrou o padrão
-      if (i - tamanhoPadrao + 2 > 0){
+      if (i - tamanhoPadrao + 2 > 0){ // Marca se o padrão não é maior do que o texto restante
         printf( "ocorrencia em: %d\n", i - tamanhoPadrao + 2);
         ocorrencias ++;
-
-      } // encontrou
+      }
     }
   }
     printf("===============================\nAo todo ocorre um total de %d ocorrencias de '%s' no texto\n===============================\n\n", ocorrencias, padrao);
