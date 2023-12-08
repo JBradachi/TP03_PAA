@@ -11,10 +11,10 @@ void pausar(){
 }
 
 int main(){
-    char mostrarPossibilidades, mostraTempReal;
+    char mostrarPossibilidades, mostraTempReal, c;
     char path[100] = "./entradas/";
-    char nomeArquivoEntrada[30] = "teste copy.txt", padrao[30];
-    int opcao, casamento;
+    char nomeArquivoEntrada[30] = "teste copy.txt", padrao[150];
+    int opcao, casamento, i;
     FILE* arqEntrada, arqSaida;
     int cifra, random = 0;
 
@@ -27,6 +27,7 @@ int main(){
         printf("\nEscolha uma das opcoes abaixo: \n1 - Entrar com arquivo \n2 - Encriptografar\n3 - Descriptografar\n4 - Buscar\n5 - Sair\n>>> ");
         // ignorar o \n na leitura da entrada
         scanf(" %d%*[^\n]",&opcao);
+        printf("\n");
         switch (opcao)
         {
             case 1:
@@ -57,10 +58,15 @@ int main(){
                 break;
             case 4: 
                 printf("Digite o padrao a ser procurado (palavra ou frase sem paragrafo):\n>>> ");
-                // scanf("%s", &padrao);
-                fseek(stdin,0,SEEK_END);
-                gets(padrao);
-  
+                i = 0;
+                getchar();
+                while ((c = getchar()) != '\n' && c != EOF && i < sizeof(padrao) - 1) {
+                    padrao[i] = c;
+                    i++;
+                }
+                padrao[i] = '\0'; 
+
+
                 manipulaCasamentos(nomeArquivoEntrada, padrao);
                 break;
             case 5:
