@@ -18,6 +18,7 @@ int calculaPercentual(TadAnalise *lista, int totalDeChar){
 void imprimePercentual(TadAnalise lista, int cifra_usada){
     int i;
     quicksort(&lista, 0, 26);
+    printf("\n");
     for(i = 0; i<26; i++){
         printf("%c | %0.2f\n", lista.listaDeOcorrencias[i].caractere, lista.listaDeOcorrencias[i].ocorrencia);
     }
