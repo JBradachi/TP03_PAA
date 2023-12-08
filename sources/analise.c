@@ -58,20 +58,20 @@ void quicksort(TadAnalise *lista,float first,float last){
 }
 
 int cifraChute(TadAnalise *lista){
-    int diferenca[5], i,j , ocorrenciaDiferenca[5];
-    char tabela[5] = "aeosr";
-    for(i=0; i<5; i++){
+    int diferenca[10], i,j , ocorrenciaDiferenca[10];
+    char tabela[10] = "aeosrindmu";
+    for(i=0; i<10; i++){
         diferenca[i] = 0;
         ocorrenciaDiferenca[i] = 0;
     }
-    for(i=0; i<5; i++){
+    for(i=0; i<10; i++){
         if ((diferenca[i] = lista->listaDeOcorrencias[i].caractere - tabela[i]) < 0){
             diferenca[i]+=26;
         }
     }
 
-    for(i=0; i<5; i++){
-        for(j = 0; j<5; j++){
+    for(i=0; i<10; i++){
+        for(j = 0; j<10; j++){
             if(diferenca[i] == diferenca[j]){
                 ocorrenciaDiferenca[i]++;
             }
