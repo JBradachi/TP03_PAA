@@ -104,20 +104,13 @@ void BoyerMooreOcorrencia( char *texto,  char *padrao){
         if (j < 0)
         {
             printf("Padrao encontrado na posicao %d\n", s);
- 
-            /* Shift the pattern so that the next 
-               character in text aligns with the last 
-               occurrence of it in pattern.
-               The condition s+m < n is necessary for 
-               the case when pattern occurs at the end 
-               of text */
                /**
                 * se a posicao da janela mais o tamanho do texto ultrapassar o tamanho do texto, deve-se andar apenas uma posição
                 * caso contrário, anda-se até que o ultimo caracter da parte que deu match no texto se alinhe com um caracter que dê match no padrão.
                 * EX.:
-                * "ABACCBCABCBA"
-                *  ABA              => Posicao que deu match
-                *    ABA            => Proxima posicao da janela
+                * "ABCACBCABCBA"
+                *  ABC              => Posicao que deu match
+                *     ABC           => Proxima posicao da janela
                 *  
                 * 
                 */
